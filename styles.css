@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 0;
+}
+
+.container {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+    transform: scale(1.05);
+}
+
+.pregunta {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.respuesta {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.opcion {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.opcion:hover {
+    background: #e0e0e0;
+    transform: scale(1.07);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.opcion.correcta {
+    background: #2ecc71;
+    color: white;
+    box-shadow: 0px 0px 15px rgba(46, 204, 113, 0.8);
+}
+
+.opcion.incorrecta {
+    background: #e74c3c;
+    color: white;
+    box-shadow: 0px 0px 15px rgba(231, 76, 60, 0.8);
+}
