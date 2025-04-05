@@ -1,12 +1,9 @@
 let pregunta =
-    {
-        planteo: '¿Cuánto es 2 + 2?',
-        opciones: ['4', '5', '6', '7'],
-        respuesta: 0,
-    };
+    generateQuestion(levelSelect);
 
+console.log(pregunta)
 const preguntaContainer = document.getElementById('pregunta-texto');
-preguntaContainer.textContent = pregunta.planteo;
+preguntaContainer.textContent = pregunta.question;
 const respuestasContainer = document.getElementById('respuestas');
 
 
@@ -23,7 +20,7 @@ function assignResponsesToButtons() {
     let buttonsArray = [...buttons];
 
     buttonsArray.forEach((e,index)=>
-    e.textContent = pregunta.opciones[index]
+    e.textContent = pregunta.allAnswers[index]
     )
 }
 
