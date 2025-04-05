@@ -1,4 +1,8 @@
-function generateQuestion()
+const symbols = ['+', '-', '*']; //Se podria agregar / o % como operadores
+const levelSelect = 5;
+
+
+function generateQuestion(level)
 {
     //Generacion de valores de cada operacion 
     const generateQuestion =
@@ -8,56 +12,77 @@ function generateQuestion()
         correctAnswer: ""
     }
 
-    let operationSymbol = getRandomOperationSymbol();
-    let operationValues = [];
-    operationValues.push(...getRandomOperationNumbers());
+    let operationSymbol = getRandomOperationSymbolByLevel(level);
+   
+    let operationValues = [getRandomOperationNumberByLevel(level), getRandomOperationNumberByLevel(level)];
+
     
     generateQuestion.question += `${operationValues[0]} ${operationSymbol} ${operationValues[1]}?`;
-    generateQuestion.allAnswers[0] = getCorrectAnswer(operationValues, operationSymbol).toString();
     generateQuestion.correctAnswer = getCorrectAnswer(operationValues, operationSymbol).toString();
+
+
+    generateQuestion.allAnswers[0] = getCorrectAnswer(operationValues, operationSymbol).toString();
+
     generateQuestion.allAnswers.push(...getAllAnswers(generateQuestion.correctAnswer));
+
     generateQuestion.allAnswers = changeAnswersOrder(generateQuestion.allAnswers);
 
-    console.log(generateQuestion.question);
+    /* console.log(generateQuestion.question);
     console.log(generateQuestion.allAnswers);
-    console.log(generateQuestion.correctAnswer);
+    console.log(generateQuestion.correctAnswer); */
+
+    return generateQuestion;
 
 }
 
 
 //Retorna el tipo de simbolo para la operacion 
-function getRandomOperationSymbol()
+function getRandomOperationSymbolByLevel(level)
 {
-    const symbols = ["+", "-", "*"];
-    const randomSymbol = Math.floor(Math.random() * symbols.length);
-    return symbols[randomSymbol];
+    const posibleSymbols = symbols.slice(0, level)
+    const randomIndex = Math.floor(Math.random() * symbols.length);
+    return posibleSymbols[randomIndex];
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 //elige 2 valores aleatorios para la operacion sin que se repitan
-function getRandomOperationNumbers()
+function getRandomOperationNumberByLevel(level)
 {
-    const numbers = ["180", "20", "330", "52", "16", "4", "44", "89", "113" ];
-
-    let randomNumber1 = numbers[Math.floor(Math.random() * numbers.length)];
-    let randomNumber2 = 0;
-    while(true)
-    {
-        randomNumber2 = numbers[Math.floor(Math.random() * numbers.length)];
-        if (randomNumber2 != randomNumber1)
-        {break;}
-    }
-
-    const result = [randomNumber1, randomNumber2]; 
-    return result;
+    switch (level) {
+        case 1:
+            return getRandomInt(1, 10);       // Muy Facil
+        case 2:
+            return getRandomInt(10, 100);      // Facil
+        case 3:
+            return getRandomInt(100, 500);     // Medio
+        case 4:
+            return getRandomInt(500, 1500);    // Dificil
+        case 5:
+            return getRandomInt(1500, 5000);   // Muy Dificil
+        default:
+          throw new Error("Invalid level. Choose 1–5.");
+      }
 }
 
 
 //Calcula cual es el resultado de la operacion
 function getCorrectAnswer(answerArray, answerSymbol)
 {
-    //console.log(answerArray);
-    return eval(`${answerArray[0]} ${answerSymbol} ${answerArray[1]}`);
+    const [num1, num2] = answerArray;
+
+  switch (answerSymbol) {
+    case '+':
+      return num1 + num2;
+    case '-':
+      return num1 - num2;
+    case '*':
+      return num1 * num2;
+    case '/':
+      return num2 !== 0 ? parseFloat((num1 / num2).toFixed) : 'Error: Division by zero';
+  }
 }
 
 //calcula valores en un rango de numeros cercanos a la respuesta
@@ -87,6 +112,3 @@ function changeAnswersOrder(answersArray)
 {
     return answersArray.sort(() => Math.random() - 0.5);
 }
-
-
-generateQuestion();
